@@ -11,6 +11,9 @@ module.exports = {
       fontSize: {
         'xxs': '0.75rem',
         'header': '11px',
+        'header-1': '10px',
+        'header-2': '9px',
+        'header-3': '9px',
       },
     },
   },
