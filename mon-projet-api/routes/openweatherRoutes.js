@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         let tableContent = "";
         weatherData.forEach(data => {
             // Adaptez ces champs en fonction de votre modèle Openweather
-            tableContent += `<tr><td>${data.name}</td><td>${data.lng}</td><td>${data.lat}</td></tr>`;
+            tableContent += `<tr><td>${data.userEmail}</td><td>${data.lng}</td><td>${data.lat}</td></tr>`;
         });
 
         const htmlResponse = `
@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newData = new Openweather({
-            name: req.body.name,
+            userEmail: req.body.userEmail,
             lng: req.body.lng,
             lat: req.body.lat,
             temperature: req.body.temperature,

@@ -2,7 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import * as L from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import {HttpClient} from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
+import {BehaviorSubject, catchError, throwError} from "rxjs";
 
 @Component({
   selector: 'app-map',
@@ -34,7 +34,6 @@ export class MapComponent {
     this.getCurrentLocation();
     this.getCurrentLocationAndSendRequest();
   }
-
   getCurrentLocationAndSendRequest(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -57,37 +56,12 @@ export class MapComponent {
     }
   }
 
-  /*
-    private sendLocationRequest(coords: { lat: number; lng: number }): void {
-      const data = {
-        name: 'USERNAME1',
-        lng: coords.lng,
-        lat: coords.lat
-      };
-
-      this.http.post('http://localhost:3000/openweather', data)
-        .pipe(
-          catchError(error => throwError(error))
-        )
-        .subscribe(
-          (response) => {
-            console.log('Location data sent successfully:', response);
-            // You can handle the response here if needed
-          },
-          (error) => {
-            console.error('Error sending location data:', error);
-          }
-        );
-    }
-
-  */
-
   getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const coords = {lat: position.coords.latitude, lng: position.coords.longitude};
         this.createMap(coords);
-        this.addMarker({coords, text: "Vous êtes ici", open: true});
+        this.addMarker({coords, text: "Vous êtes ici ", open: true});
         console.log('Latitude: ' + position.coords.latitude + ' Longitude: ' + position.coords.longitude);
 
       }, (error) => {
@@ -141,9 +115,12 @@ export class MapComponent {
           // Ajoutez d'autres données au besoin
         };
 
+        sessionStorage.setItem('temp', weatherResponse.main.temp);
+
+
         // Préparation des données à envoyer à votre API backend
         const dataToSend = {
-          name: 'USERNAME1', // Ajustez selon votre logique d'application
+          userEmail: JSON.parse(sessionStorage.getItem("loggedInUser") || '{}').name, // Ajustez selon votre logique d'application
           lng: coords.lng,
           lat: coords.lat,
           // heureAppel est dérivée de dateAppel ou peut être spécifiée séparément si nécessaire
@@ -157,7 +134,7 @@ export class MapComponent {
           vitesseVent: weatherData.vitesseVent,
         };
 
-        // Envoi des données à votre backend
+        // Envoi des données au backend
         this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
           (response) => {
             console.log('Location and weather data sent successfully:', response);

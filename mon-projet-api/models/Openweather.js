@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const openweatherSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    userEmail: {type: String, required: true},
     lng: {type: Number, required: true},
     lat: {type: Number, required: true},
 
