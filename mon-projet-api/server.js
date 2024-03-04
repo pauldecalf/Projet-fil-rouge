@@ -5,8 +5,8 @@ const PORT = process.env.PORT || 3000;
 const Routes = require('./routes/Routes');
 const openweatherRoutes = require('./routes/openweatherRoutes');
 const cors = require('cors');
-
-const mongoURI = 'mongodb+srv://admin:admin@atlascluster.vfolo9m.mongodb.net/';
+require('dotenv').config();
+const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI)
     .then(() => console.log('Connexion à MongoDB réussie'))
