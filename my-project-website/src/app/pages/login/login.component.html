@@ -1,18 +1,25 @@
 <div class="absolute z-20 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-sm">
-  <div class="bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Vous devez vous connecter</h2>
-    <!-- Case à cocher pour accepter les conditions d'utilisation -->
-    <div class="mb-4">
-      <label >En vous connectant, vous acceptez les <a href="URL_VERS_VOS_CGU">Conditions Générales d'Utilisation</a>.</label>
+  <div class="bg-white p-4 md:p-8 rounded-lg shadow-md relative w-11/12 md:w-auto">
+    <a (click)="enterVisitorMode()" href="#">
+      <img src="./assets/img/close.png" alt="Close Popup Icon" class="absolute top-0 h-5 right-3 mt-4">
+    </a>
+    <h2 class="text-xl md:text-2xl font-semibold text-center text-gray-800 mb-3 md:mb-4">Module de connexion</h2>
+
+    <div class="flex flex-col md:flex-row items-center justify-center my-3 md:my-5">
+      <div id="google-btn"></div>
+      <p class="my-3 md:mx-5">OU</p>
+      <button (click)="enterVisitorMode()" class="bg-blue-500 hover:bg-blue-700 text-white font-light py-2 px-4 rounded">
+        Mode visiteur
+      </button>
+    </div>
+    <div class="mb-3 md:mb-4">
+      <p class="text-sm md:text-base">En vous connectant vous acceptez les <a href="#" class="underline">CGU</a>.</p>
     </div>
 
-    <div id="google-btn"></div>
-
-    <div class="flex justify-center mt-3">
-      <a href="" class="text-header mr-3">Mentions légales</a>
-      <a href="" class="text-header mr-3">CGU</a>
-      <a href="" class="text-header">RGPD</a>
+    <div class="flex justify-center mt-2 md:mt-3">
+      <a href="#" class="text-xs md:text-header mr-2 md:mr-3">Mentions légales</a>
+      <a href="#" class="text-xs md:text-header mr-2 md:mr-3">CGU</a>
+      <a href="#" class="text-xs md:text-header">RGPD</a>
     </div>
   </div>
 </div>
-

@@ -31,8 +31,6 @@ export class HeaderComponent implements AfterViewInit {
       this.temperature = JSON.parse(temp);
     }
 
-
-
     this.showLogin = !sessionStorage.getItem('loggedInUser');
     this.cdr.detectChanges(); // Déclenche manuellement la détection de changement
     this.burgerBar?.nativeElement.addEventListener('click', (e: { preventDefault: () => void; }) => {
