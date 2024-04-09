@@ -15,6 +15,9 @@ module.exports = {
         'header-2': '9px',
         'header-3': '9px',
       },
+      screens: {
+        'display-temperature': '370px'
+      },
     },
   },
   plugins: [],

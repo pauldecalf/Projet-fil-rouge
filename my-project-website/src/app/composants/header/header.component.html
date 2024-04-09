@@ -1,6 +1,6 @@
 <app-login *ngIf="showLogin"></app-login>
     <!-- Contenu existant -->
-    <div class="flex flex-col lg:flex-row min-h-screen">
+  <div class="flex flex-col lg:flex-row min-h-screen">
 
     <!-- Header de gauche pour pc -->
     <div class="lg:flex hidden flex-col items-center justify-between w-16 bg-white shadow-lg rounded-xl min-h-screen">
@@ -14,10 +14,12 @@
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
 
-        <a  href="/" class="flex flex-col items-center justify-center p-4">
+        <a  class=" flex flex-col items-center justify-center p-4">
           <img src="/assets/img/tab.png" alt="" class="w-6">
           <span class="text-header-2 mt-1 hidden">Enregistrer</span>
         </a>
+
+
         <a  href="/" class=" flex flex-col items-center justify-center p-4">
         <img src="/assets/img/notification.png" alt="" class="w-4">
           <span class="text-header-2 mt-1 hidden">Notifications</span>
@@ -30,7 +32,7 @@
     </div>
 
     <!-- Search bar -->
-    <div class="w-[70%] lg:w-[40%] mt-2 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
+    <div class="w-[50%] mt-2 absolute top-0 left-1/2 transform  -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <form class=" mx-auto">
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
         <div class="relative">
@@ -44,69 +46,193 @@
       </form>
     </div>
 
+    <!-- Div historique -->
+    <div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
+      <!-- Contenu de l'historique -->
+      <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!historyPanelVisible">
+        <h3 class="text-lg font-semibold mb-2">Historique météo</h3>
+
+        <p class="mb-5">Aujourd'hui</p>
+          <ul>
+            <li class="m-5">
+              <div class="inline-block">
+                <strong><p>PARIS</p></strong>
+                <strong><p>10:00</p></strong>
+              </div>
+              <div class="inline-block">
+                <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+              </div>
+              <div class="inline-block">
+                <p>Début de légères pluies</p>
+              </div>
+            </li>
+            <li class="m-5 ">
+              <div class="inline-block">
+                <strong><p>LONDRES</p></strong>
+                <strong><p>14:30</p></strong>
+              </div>
+              <div class="inline-block">
+                <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+              </div>
+              <div class="inline-block">
+                <p>Soleil</p>
+              </div>
+            </li>
+
+            <li class="m-5 ">
+              <div class="inline-block">
+                <strong><p>NEW YORK</p></strong>
+                <strong><p>08:45</p></strong>
+              </div>
+              <div class="inline-block">
+                <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+              </div>
+              <div class="inline-block">
+                <p>Pluies intermittentes</p>
+              </div>
+            </li>
+
+            <li class="m-5 ">
+              <div class="inline-block">
+                <strong><p>TOKYO</p></strong>
+                <strong><p>18:15</p></strong>
+              </div>
+              <div class="inline-block">
+                <img src="/assets/img/thunderstorm.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+              </div>
+              <div class="inline-block">
+                <p>Orages</p>
+              </div>
+            </li>
+
+            <!-- Ajoutez d'autres éléments d'historique ici -->
+          </ul>
+
+        <p class="mb-5">Hier</p>
+        <ul>
+          <li class="m-5 text-xxs">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>10:00</p></strong>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block">
+              <p>Début de légères pluies</p>
+            </div>
+          </li>
+          <li class="m-5 text-xxs">
+            <div class="inline-block">
+              <strong><p>LONDRES</p></strong>
+              <strong><p>14:30</p></strong>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block">
+              <p>Soleil</p>
+            </div>
+          </li>
+
+          <li class="m-5 text-xxs">
+            <div class="inline-block">
+              <strong><p>NEW YORK</p></strong>
+              <strong><p>08:45</p></strong>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block">
+              <p>Pluies intermittentes</p>
+            </div>
+          </li>
+
+          <li class="m-5 text-xxs">
+            <div class="inline-block">
+              <strong><p>TOKYO</p></strong>
+              <strong><p>18:15</p></strong>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/thunderstorm.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block">
+              <p>Orages</p>
+            </div>
+          </li>
+
+          <!-- Ajoutez d'autres éléments d'historique ici -->
+        </ul>
+      </div>
+    </div>
+
     <!-- Map -->
     <div class="flex-grow -z-0" id="map"></div>
 
-    <!-- Div météo -->
-    <div class="absolute top-0 right-0 z-10 mt-2 mr-2 sm:block hidden text-header">
+    <!-- Div météo DESKTOP -->
+    <div class="hidden display-temperature:block absolute top-0 right-0 z-10 mt-2 mr-2  text-xxs">
       <div class="flex flex-row items-center justify-center p-2 sm:p-4 bg-white shadow-lg rounded-xl">
         <img src="/assets/img/sun.png" alt="" class="w-6">
-        <span class=" ml-3"><div *ngIf="temperature !== null">
-  {{ temperature }}°
-</div></span>
+        <span class=" ml-3">
+          <div *ngIf="temperature !== null">
+            {{ temperature }}°
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <!-- Div météo MOBILE-->
+    <div class=" display-temperature:hidden absolute bottom-20 ml-5 right-0 z-10 mt-2 mr-2  text-xxs">
+      <div class="flex flex-row items-center justify-center p-2 sm:p-4 bg-white shadow-lg rounded-xl">
+        <img src="/assets/img/sun.png" alt="" class="w-6">
+        <span class="ml-3">
+      <div *ngIf="temperature !== null">
+        {{ temperature }}°
+      </div>
+    </span>
       </div>
     </div>
 
     <!-- Div header en bas de l'écran sur téléphone !-->
-    <div class="h-5/6 z-10 flex justify-center items-center lg:hidden">
-      <!-- Conteneur de grille pour les boutons, affichés horizontalement -->
-      <div class="grid grid-cols-4 gap-6 sm:gap-20 mt-2 mb-1">
+    <div class="text-xxs h-5/6 z-10 flex justify-center items-center lg:hidden">
+      <!-- Conteneur de grille pour les boutons, affichés horizontalement sur les petits écrans -->
+      <div class="grid grid-cols-4 gap-3 sm:gap-20 mt-2 mb-1 justify-center ">
 
-        <a href="/" class="flex flex-col items-center justify-center ">
-          <img src="/assets/img/placeholder.png" alt="" class="w-3">
-          <span class="text-header">Déplacements</span>
+        <a (click)="toggleHistoryPanel()"  class="flex flex-col items-center justify-center">
+          <img src="/assets/img/placeholder.png" alt="" class="w-4 ">
+          <span>Déplacements</span>
         </a>
 
         <a href="/" class="flex flex-col items-center justify-center ">
-          <img src="/assets/img/tab.png" alt="" class="w-6">
+          <img src="/assets/img/tab.png" alt="" class="w-4">
+          <span>Enregistrer</span>
         </a>
 
         <a href="/" class="flex flex-col items-center justify-center ">
-          <img src="/assets/img/notification.png" alt="" class="w-3">
-          <span class="text-header">Notifications</span>
+          <img src="/assets/img/notification.png" alt="" class="w-4">
+          <span >Notifications</span>
         </a>
 
         <a href="/" class="flex flex-col items-center justify-center ">
-          <img src="/assets/img/user.png" alt="" class="w-3">
-          <span class="text-header">Compte</span>
+          <img src="/assets/img/user.png" alt="" class="w-4">
+          <span class="" >Compte</span>
         </a>
       </div>
     </div>
+
   </div>
 
-<div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="history-panel fixed bottom-0 left-1/2 transform -translate-x-1/2 w-90 max-w-xs bg-white rounded-t-xl shadow-md overflow-hidden transition-height duration-300 ease-out">
-  <!-- Contenu de l'historique -->
-  <div class="p-4">
-    <h3 class="text-lg font-semibold mb-2">Historique des emplacements</h3>
-    <ul>
-      <li class="mb-2">Emplacement 1</li>
-      <li class="mb-2">Emplacement 2</li>
-      <li class="mb-2">Emplacement 3</li>
-      <!-- Ajoutez d'autres éléments d'historique ici -->
-    </ul>
-  </div>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const historyButton = document.getElementById("historyButton");
-    const historyPanel = document.getElementById("historyPanel");
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const historyButton = document.getElementById("historyButton");
+      const historyPanel = document.getElementById("historyPanel");
 
-    historyButton.addEventListener("click", function(event) {
-      event.preventDefault(); // Empêche le rechargement de la page
-      // Basculement du panneau d'historique lors du clic sur le bouton Historique
-      historyPanel.classList.toggle("h-0");
-      historyPanel.classList.toggle("h-auto");
+      historyButton.addEventListener("click", function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+        // Basculement du panneau d'historique lors du clic sur le bouton Historique
+        historyPanel.classList.toggle("h-0");
+        historyPanel.classList.toggle("h-auto");
+      });
     });
-  });
 
-</script>
+  </script>

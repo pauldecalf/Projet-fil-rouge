@@ -2,6 +2,8 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, ViewChi
 import {LoginComponent} from "../../pages/login/login.component";
 import {NgIf} from "@angular/common";
 import {AuthService} from "../../auth.service";
+import { HttpClient } from "@angular/common/http";
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -18,9 +20,10 @@ export class HeaderComponent implements AfterViewInit {
   signOut() {
     this.auth.signOut();
   }
-
+  latitudeValue: number = 0;
+  longitudeValue: number = 0;
   temperature: string | undefined;
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private http: HttpClient) {}
 
 
   @ViewChild('burgerBar') burgerBar: ElementRef | undefined;
@@ -48,4 +51,6 @@ export class HeaderComponent implements AfterViewInit {
     this.historyPanelVisible = !this.historyPanelVisible;
   }
 
+
 }
+
