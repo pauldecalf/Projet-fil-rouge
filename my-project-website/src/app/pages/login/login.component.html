@@ -13,13 +13,60 @@
       </button>
     </div>
     <div class="mb-3 md:mb-4">
-      <p class="text-sm md:text-base">En vous connectant vous acceptez les <a href="#" class="underline">CGU</a>.</p>
+      <p class="text-sm md:text-base">En vous connectant vous acceptez les <a href="#" class="underline" (click)="toggleCGUText()">CGU</a>.</p>
     </div>
 
+    <!-- Blocs de texte pour les mentions légales, les CGU et le RGPD -->
+    <div *ngIf="showLegalText" class="mb-8">
+      <div class="max-w-xs md:max-w-md mx-auto bg-gray-100 p-4 rounded-lg shadow overflow-y-auto max-h-64">
+        <h3 class="text-lg font-semibold mb-4">Mentions légales</h3>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          LePetitPaul corporation est une entreprise fictive spécialisée dans les services de géolocalisation et de météorologie. Notre site web, GeoMétéo, offre aux utilisateurs des informations météorologiques en temps réel et des services de cartographie pour leur permettre de planifier leurs déplacements en fonction des conditions météorologiques.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          GeoMétéo est une plateforme sécurisée qui respecte la vie privée de ses utilisateurs. Nous nous engageons à protéger vos données personnelles conformément à la législation en vigueur.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          Pour toute question concernant nos services ou notre politique de confidentialité, veuillez nous contacter à l'adresse suivante : contact&#64;leptitpaul.com.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="showCGUText" class="mb-8">
+      <div class="max-w-xs md:max-w-md mx-auto bg-gray-100 p-4 rounded-lg shadow overflow-y-auto max-h-64">
+        <h3 class="text-lg font-semibold mb-4">Conditions générales d'utilisation</h3>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          Les présentes conditions générales d'utilisation régissent l'utilisation de notre site web, GeoMétéo, édité par LePetitPaul corporation. En utilisant notre site, vous acceptez ces conditions dans leur intégralité. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser notre site.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          Nous nous réservons le droit de modifier ces conditions à tout moment, sans préavis. Il est de votre responsabilité de consulter régulièrement ces conditions pour prendre connaissance de toute modification.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          GeoMétéo est destiné à un usage personnel et non commercial. Toute utilisation à des fins commerciales est strictement interdite sans notre autorisation préalable.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="showRGPDText" class="mb-8">
+      <div class="max-w-xs md:max-w-md mx-auto bg-gray-100 p-4 rounded-lg shadow overflow-y-auto max-h-64">
+        <h3 class="text-lg font-semibold mb-4">RGPD</h3>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          GeoMétéo, exploité par LePetitPaul corporation, est conforme au Règlement général sur la protection des données (RGPD) de l'Union européenne. Nous nous engageons à protéger vos données personnelles et à les traiter de manière transparente et sécurisée.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          Notre politique de confidentialité décrit en détail les types de données que nous collectons, comment nous les utilisons et les mesures que nous prenons pour les protéger. En utilisant GeoMétéo, vous consentez à la collecte et au traitement de vos données conformément à cette politique.
+        </p>
+        <p class="text-sm text-gray-700 leading-relaxed mt-2">
+          Si vous avez des questions sur notre politique de confidentialité ou si vous souhaitez exercer vos droits en matière de protection des données, veuillez nous contacter à l'adresse indiquée dans nos mentions légales.
+        </p>
+      </div>
+    </div>
+
+
     <div class="flex justify-center mt-2 md:mt-3">
-      <a href="#" class="text-xs md:text-header mr-2 md:mr-3">Mentions légales</a>
-      <a href="#" class="text-xs md:text-header mr-2 md:mr-3">CGU</a>
-      <a href="#" class="text-xs md:text-header">RGPD</a>
+      <a href="#" class="text-xs md:text-header mr-2 md:mr-3" (click)="toggleLegalText()">Mentions légales</a>
+      <a href="#" class="text-xs md:text-header mr-2 md:mr-3" (click)="toggleCGUText()">CGU</a>
+      <a href="#" class="text-xs md:text-header" (click)="toggleRGPDText()">RGPD</a>
     </div>
   </div>
 </div>

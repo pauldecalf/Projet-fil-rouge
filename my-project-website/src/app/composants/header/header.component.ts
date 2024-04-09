@@ -40,9 +40,12 @@ export class HeaderComponent implements AfterViewInit {
         element.classList.toggle('hidden'); // Basculer la classe 'hidden'
       });
     });
-
-
-
-
   }
+  // Méthode pour gérer le clic sur le bouton Historique
+  historyPanelVisible: boolean = false;
+
+  toggleHistoryPanel() {
+    this.historyPanelVisible = !this.historyPanelVisible;
+  }
+
 }

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import {CommonModule} from "@angular/common";
 
 declare var google: any;
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -42,5 +43,29 @@ export class LoginComponent implements OnInit {
     // Définir l'utilisateur en mode visiteur
     sessionStorage.setItem('loggedInUser', 'visiteur');
     location.reload();
+  }
+
+  // GESTION DES TEXTES LÉGAUX
+
+  showLegalText: boolean = false;
+  showCGUText: boolean = false;
+  showRGPDText: boolean = false;
+
+  toggleLegalText() {
+    this.showLegalText = !this.showLegalText;
+    this.showCGUText = false; // Masquer les autres blocs de texte lorsque l'un est affiché
+    this.showRGPDText = false;
+  }
+
+  toggleCGUText() {
+    this.showCGUText = !this.showCGUText;
+    this.showLegalText = false; // Masquer les autres blocs de texte lorsque l'un est affiché
+    this.showRGPDText = false;
+  }
+
+  toggleRGPDText() {
+    this.showRGPDText = !this.showRGPDText;
+    this.showLegalText = false; // Masquer les autres blocs de texte lorsque l'un est affiché
+    this.showCGUText = false;
   }
 }

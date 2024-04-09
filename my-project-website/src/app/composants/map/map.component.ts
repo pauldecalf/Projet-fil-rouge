@@ -106,7 +106,7 @@ export class MapComponent {
       }
     }
 
-    if (userEmail !== 'visiteur') {
+
       const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&units=metric`;
 
       this.http.get(weatherAPIUrl).pipe(
@@ -133,21 +133,21 @@ export class MapComponent {
             humidity: weatherData.humidity,
             windSpeed: weatherData.windSpeed,
           };
-
-          this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
-            (response) => {
-              console.log('Location and weather data sent successfully:', response);
-            },
-            (error) => {
-              console.error('Error sending location and weather data:', error);
-            }
-          );
+          if (userEmail !== 'visiteur') {
+            this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
+              (response) => {
+                console.log('Location and weather data sent successfully:', response);
+              },
+              (error) => {
+                console.error('Error sending location and weather data:', error);
+              }
+            );
+          };
         },
         (error) => {
           console.error('Error fetching weather data:', error);
         }
       );
-    }
-  }
 
+  }
 }

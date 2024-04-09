@@ -9,15 +9,16 @@
           <img src="/assets/img/burger-bar%20(1).png" alt="" class="w-4">
           <span class="text-header mt-1 hidden">Menu</span>
         </a>
-        <a href="/" class="flex flex-col items-center justify-center p-4">
+        <a (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
           <img src="/assets/img/placeholder.png" alt="" class="w-4">
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
-        <a href="/" class="flex flex-col items-center justify-center p-4">
+
+        <a  href="/" class="flex flex-col items-center justify-center p-4">
           <img src="/assets/img/tab.png" alt="" class="w-6">
           <span class="text-header-2 mt-1 hidden">Enregistrer</span>
         </a>
-        <a href="/" class=" flex flex-col items-center justify-center p-4">
+        <a  href="/" class=" flex flex-col items-center justify-center p-4">
         <img src="/assets/img/notification.png" alt="" class="w-4">
           <span class="text-header-2 mt-1 hidden">Notifications</span>
         </a>
@@ -59,7 +60,8 @@
     <!-- Div header en bas de l'écran sur téléphone !-->
     <div class="h-5/6 z-10 flex justify-center items-center lg:hidden">
       <!-- Conteneur de grille pour les boutons, affichés horizontalement -->
-      <div class="grid grid-cols-5 gap-6 sm:gap-20 mt-2 mb-1">
+      <div class="grid grid-cols-4 gap-6 sm:gap-20 mt-2 mb-1">
+
         <a href="/" class="flex flex-col items-center justify-center ">
           <img src="/assets/img/placeholder.png" alt="" class="w-3">
           <span class="text-header">Déplacements</span>
@@ -81,3 +83,30 @@
       </div>
     </div>
   </div>
+
+<div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="history-panel fixed bottom-0 left-1/2 transform -translate-x-1/2 w-90 max-w-xs bg-white rounded-t-xl shadow-md overflow-hidden transition-height duration-300 ease-out">
+  <!-- Contenu de l'historique -->
+  <div class="p-4">
+    <h3 class="text-lg font-semibold mb-2">Historique des emplacements</h3>
+    <ul>
+      <li class="mb-2">Emplacement 1</li>
+      <li class="mb-2">Emplacement 2</li>
+      <li class="mb-2">Emplacement 3</li>
+      <!-- Ajoutez d'autres éléments d'historique ici -->
+    </ul>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const historyButton = document.getElementById("historyButton");
+    const historyPanel = document.getElementById("historyPanel");
+
+    historyButton.addEventListener("click", function(event) {
+      event.preventDefault(); // Empêche le rechargement de la page
+      // Basculement du panneau d'historique lors du clic sur le bouton Historique
+      historyPanel.classList.toggle("h-0");
+      historyPanel.classList.toggle("h-auto");
+    });
+  });
+
+</script>
