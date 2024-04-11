@@ -71,7 +71,6 @@ export class MapComponent {
     }
   }
 
-
   createMap(coords: { lat: number; lng: number }): void {
     const zoomLevel = 17;
     this.map = L.map('map', {
@@ -106,50 +105,56 @@ export class MapComponent {
       }
     }
 
+    const currentTime = new Date().getTime();
+    const lastRequestTime = Number(sessionStorage.getItem('lastRequestTime-'+userEmail));
+    if (userEmail !== 'visiteur' && lastRequestTime && (currentTime - lastRequestTime) < 300000) {
+      // Si moins de 5 minutes se sont écoulées depuis la dernière requête, on ne fait rien
+      return;
+    }
 
-      const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&units=metric`;
+    const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&units=metric`;
 
-      this.http.get(weatherAPIUrl).pipe(
-        catchError(error => throwError(() => new Error('Error fetching weather data: ' + error)))
-      ).subscribe(
-        (weatherResponse: any) => {
-          console.log('Weather data fetched successfully:', weatherResponse);
-          const weatherData = {
-            temperature: weatherResponse.main.temp,
-            pressure: weatherResponse.main.pressure,
-            humidity: weatherResponse.main.humidity,
-            windSpeed: weatherResponse.wind.speed,
-          };
+    this.http.get(weatherAPIUrl).pipe(
+      catchError(error => throwError(() => new Error('Error fetching weather data: ' + error)))
+    ).subscribe(
+      (weatherResponse: any) => {
+        console.log('Weather data fetched successfully:', weatherResponse);
+        const weatherData = {
+          temperature: weatherResponse.main.temp,
+          pressure: weatherResponse.main.pressure,
+          humidity: weatherResponse.main.humidity,
+          windSpeed: weatherResponse.wind.speed,
+        };
 
-          sessionStorage.setItem('temp', weatherResponse.main.temp);
+        sessionStorage.setItem('temp', String(weatherResponse.main.temp));
+        sessionStorage.setItem('lastRequestTime-' + userEmail, String(currentTime));  // save the current time as Last Request Time in the sesssionStorage
 
+        if (userEmail !== 'visiteur') {
           const dataToSend = {
             userEmail,
             lng: coords.lng,
             lat: coords.lat,
-            heureAppel: new Date().getTime(),
+            heureAppel: currentTime,
             temperature: weatherData.temperature,
             pressure: weatherData.pressure,
             humidity: weatherData.humidity,
             windSpeed: weatherData.windSpeed,
           };
-          if (userEmail !== 'visiteur') {
-            this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
-              (response) => {
-                console.log('Location and weather data sent successfully:', response);
-              },
-              (error) => {
-                console.error('Error sending location and weather data:', error);
-              }
-            );
-          };
-        },
-        (error) => {
-          console.error('Error fetching weather data:', error);
+
+          this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
+            (response) => {
+              console.log('Location and weather data sent successfully:', response);
+            },
+            (error) => {
+              console.error('Error sending location and weather data:', error);
+            }
+          );
         }
-      );
-
+      },
+      (error) => {
+        console.error('Error fetching weather data:', error);
+      }
+    );
   }
-
 
 }

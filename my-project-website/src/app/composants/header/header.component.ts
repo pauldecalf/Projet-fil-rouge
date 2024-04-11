@@ -3,6 +3,7 @@ import {LoginComponent} from "../../pages/login/login.component";
 import {NgIf} from "@angular/common";
 import {AuthService} from "../../auth.service";
 import { HttpClient } from "@angular/common/http";
+import {LocationService} from "../../location.service";
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,8 @@ import { HttpClient } from "@angular/common/http";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements AfterViewInit {
+
+
   showLogin: boolean = false;
   auth = inject(AuthService);
   signOut() {
@@ -23,12 +26,11 @@ export class HeaderComponent implements AfterViewInit {
   latitudeValue: number = 0;
   longitudeValue: number = 0;
   temperature: string | undefined;
-  constructor(private cdr: ChangeDetectorRef, private http: HttpClient) {}
+  constructor(private locationService: LocationService, private cdr: ChangeDetectorRef, private http: HttpClient) {}
 
 
   @ViewChild('burgerBar') burgerBar: ElementRef | undefined;
   ngAfterViewInit() {
-
     const temp = sessionStorage.getItem('temp');
     if (temp !== null) {
       this.temperature = JSON.parse(temp);
@@ -49,6 +51,14 @@ export class HeaderComponent implements AfterViewInit {
 
   toggleHistoryPanel() {
     this.historyPanelVisible = !this.historyPanelVisible;
+  }
+
+  SaveLocation() {
+    this.locationService.getCurrentLocation().then(coords => {
+      this.locationService.sendLocationRequest(coords);
+    }).catch(error => {
+      console.error('Error getting location:', error);
+    });
   }
 
 

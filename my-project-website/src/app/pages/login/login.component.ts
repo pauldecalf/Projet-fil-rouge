@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {CommonModule} from "@angular/common";
+import {LocationService} from "../../location.service";
 
 declare var google: any;
 
@@ -14,8 +15,13 @@ declare var google: any;
 export class LoginComponent implements OnInit {
 
   private router = inject(Router);
+  constructor(private locationService: LocationService) { }
 
   ngOnInit() {
+    // Exemple d'utilisation de sendLocationRequest
+    const coords = { lat: 123, lng: 456 }; // Coordonnées à envoyer
+    this.locationService.sendLocationRequest(coords);
+
     google.accounts.id.initialize({
       client_id: '1043280726080-2kjputaaed6b03r443rqf9o3e5takbvp.apps.googleusercontent.com',
       callback: (resp: any) => this.handleGoogleLogin(resp)
