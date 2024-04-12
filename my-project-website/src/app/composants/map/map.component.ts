@@ -81,7 +81,14 @@ export class MapComponent {
       minZoom: 12,
       maxZoom: 17,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+    }).addTo(<L.Map>this.map);
+
+    // On utilise Promise.resolve().then() à la place de setTimeout
+    Promise.resolve().then(() => {
+      if (this.map) {
+        this.map.invalidateSize();
+      }
+    });
   }
 
   addMarker({ coords, text, open }: { coords: { lat: number; lng: number }; text: string; open: boolean }): void {
@@ -141,7 +148,7 @@ export class MapComponent {
             windSpeed: weatherData.windSpeed,
           };
 
-          this.http.post('http://localhost:3000/openweather', dataToSend).subscribe(
+          this.http.post('http://91.170.37.3:30000/openweather', dataToSend).subscribe(
             (response) => {
               console.log('Location and weather data sent successfully:', response);
             },
