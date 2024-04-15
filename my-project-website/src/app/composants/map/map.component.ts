@@ -148,7 +148,7 @@ export class MapComponent {
             windSpeed: weatherData.windSpeed,
           };
 
-          this.http.post('http://91.170.37.3:30000/openweather', dataToSend).subscribe(
+          this.http.post('https://c8c4-185-226-32-21.ngrok-free.app/openweather', dataToSend).subscribe(
             (response) => {
               console.log('Location and weather data sent successfully:', response);
             },

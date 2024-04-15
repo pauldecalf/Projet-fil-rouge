@@ -5,8 +5,10 @@ const PORT = process.env.PORT || 30000;
 const Routes = require('./routes/Routes');
 const openweatherRoutes = require('./routes/openweatherRoutes');
 const cors = require('cors');
+
 require('dotenv').config();
 const mongoURI = process.env.MONGO_URI;
+app.use(cors()); // Active CORS pour toutes les routes
 
 mongoose.connect(mongoURI)
     .then(() => console.log('Connexion à MongoDB réussie'))

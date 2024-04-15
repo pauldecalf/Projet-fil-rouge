@@ -26,23 +26,30 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "./node_modules/leaflet/dist/images",
-                "output": "./assets/"
+                "input": "./node_modules/leaflet/dist/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet.markercluster/dist/",
+                "output": "/assets/"
               }
             ],
-
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "700kb",
+                  "maximumError": "800kb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -88,7 +95,17 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet/dist/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet.markercluster/dist/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "src/styles.css"
