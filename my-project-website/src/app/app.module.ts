@@ -1,18 +1,20 @@
-import {NgModule} from '@angular/core';
+import {Component, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import { HeaderComponent } from './composants/header/header.component';
 
-import {AppComponent} from './app.component';
+// AppComponent sans 'standalone: true'
+@Component({
+  selector: 'app-root',
+  template: `<h1>Hello world</h1><app-header></app-header>`, // Utilisez le sélecteur du HeaderComponent dans le template
+})
+export class AppComponent {}
 
 @NgModule({
-  declarations: [ // Déclarez AppComponent ici si nécessaire
+  declarations: [
+    AppComponent, // Incluez l'AppComponent ici
+    HeaderComponent // Incluez le HeaderComponent ici
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule],
+  bootstrap: [AppComponent] // L'AppComponent sera initialisé au lancement de l'application
 })
-export class AppModule {
-}
+export class AppModule {}

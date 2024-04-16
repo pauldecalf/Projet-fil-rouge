@@ -1,3 +1,4 @@
+
 <app-login *ngIf="showLogin"></app-login>
     <!-- Contenu existant -->
   <div class="flex flex-col lg:flex-row min-h-screen">
@@ -6,27 +7,26 @@
     <div class="lg:flex hidden flex-col items-center justify-between w-16 bg-white shadow-lg rounded-xl min-h-screen">
       <div>
         <a #burgerBar href="/" class="flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/burger-bar%20(1).png" alt="" class="w-4">
+          <img src="/assets/img/burger-bar%20(1).png" alt="" class="w-5">
           <span class="text-header mt-1 hidden">Menu</span>
         </a>
+        <a (click)="toggleAujourdhuiPanel()" class="flex flex-col items-center justify-center p-4">
+          <img src="/assets/img/calendar.png" alt="" class="w-5">
+          <span class="text-header-2 mt-1 hidden">Aujourd'hui</span>
+        </a>
+
         <a (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/placeholder.png" alt="" class="w-4">
+          <img src="/assets/img/history.png" alt="" class="w-5">
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
 
-        <a (click)="SaveLocation()" class=" flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/tab.png" alt="" class="w-6">
-          <span class="text-header-2 mt-1 hidden">Enregistrer</span>
-        </a>
-
-
-        <a  href="/" class=" flex flex-col items-center justify-center p-4">
-        <img src="/assets/img/notification.png" alt="" class="w-4">
+        <a (click)="toggleNotificationPanel()" class=" flex flex-col items-center justify-center p-4">
+        <img src="/assets/img/notification.png" alt="" class="w-5">
           <span class="text-header-2 mt-1 hidden">Notifications</span>
         </a>
       </div>
-      <a (click)="signOut()" href="/" class="flex flex-col items-center justify-between p-4">
-        <img src="/assets/img/user.png" alt="" class="w-4">
+      <a (click)="toggleAccountPanel()" class="flex flex-col items-center justify-between p-4">
+        <img src="/assets/img/user.png" alt="" class="w-5">
         <span class="text-header mt-1 hidden">Compte</span>
       </a>
     </div>
@@ -46,117 +46,331 @@
       </form>
     </div>
 
-    <!-- Div historique -->
+    <!-- Div HISTORIQUE -->
     <div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
+      <img [class.hidden]="!historyPanelVisible" (click)="toggleHistoryPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!historyPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Historique météo</h3>
 
         <p class="mb-5">Aujourd'hui</p>
-          <ul>
-            <li class="m-5">
-              <div class="inline-block">
-                <strong><p>PARIS</p></strong>
-                <strong><p>10:00</p></strong>
-              </div>
-              <div class="inline-block">
-                <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
-              </div>
-              <div class="inline-block">
-                <p>Début de légères pluies</p>
-              </div>
-            </li>
-            <li class="m-5 ">
-              <div class="inline-block">
-                <strong><p>LONDRES</p></strong>
-                <strong><p>14:30</p></strong>
-              </div>
-              <div class="inline-block">
-                <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
-              </div>
-              <div class="inline-block">
-                <p>Soleil</p>
-              </div>
-            </li>
-
-            <li class="m-5 ">
-              <div class="inline-block">
-                <strong><p>NEW YORK</p></strong>
-                <strong><p>08:45</p></strong>
-              </div>
-              <div class="inline-block">
-                <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
-              </div>
-              <div class="inline-block">
-                <p>Pluies intermittentes</p>
-              </div>
-            </li>
-
-            <li class="m-5 ">
-              <div class="inline-block">
-                <strong><p>TOKYO</p></strong>
-                <strong><p>18:15</p></strong>
-              </div>
-              <div class="inline-block">
-                <img src="/assets/img/thunderstorm.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
-              </div>
-              <div class="inline-block">
-                <p>Orages</p>
-              </div>
-            </li>
-
-            <!-- Ajoutez d'autres éléments d'historique ici -->
-          </ul>
-
-        <p class="mb-5">Hier</p>
         <ul>
-          <li class="m-5 text-xxs">
+          <!-- 10:00 -->
+          <li class="m-5">
             <div class="inline-block">
               <strong><p>PARIS</p></strong>
               <strong><p>10:00</p></strong>
             </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
             <div class="inline-block">
               <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
             </div>
-            <div class="inline-block">
+            <div class="inline-block align-super">
               <p>Début de légères pluies</p>
             </div>
           </li>
-          <li class="m-5 text-xxs">
+          <!-- 11:00 -->
+          <li class="m-5">
             <div class="inline-block">
-              <strong><p>LONDRES</p></strong>
-              <strong><p>14:30</p></strong>
+              <strong><p>PARIS</p></strong>
+              <strong><p>11:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
             </div>
             <div class="inline-block">
               <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
             </div>
-            <div class="inline-block">
+            <div class="inline-block align-super">
               <p>Soleil</p>
             </div>
           </li>
-
-          <li class="m-5 text-xxs">
+          <!-- 12:00 -->
+          <li class="m-5">
             <div class="inline-block">
-              <strong><p>NEW YORK</p></strong>
-              <strong><p>08:45</p></strong>
+              <strong><p>PARIS</p></strong>
+              <strong><p>12:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
+              <p>Nuageux</p>
+            </div>
+          </li>
+          <!-- 13:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>13:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
             </div>
             <div class="inline-block">
               <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
             </div>
+            <div class="inline-block align-super">
+              <p>Pluies légères</p>
+            </div>
+          </li>
+          <!-- 14:00 -->
+          <li class="m-5">
             <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>14:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
+              <p>Soleil</p>
+            </div>
+          </li>
+          <!-- 15:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>15:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
+              <p>Nuageux</p>
+            </div>
+          </li>
+          <!-- Ajoutez d'autres éléments d'historique ici -->
+        </ul>
+
+        <p class="mb-5">Hier</p>
+        <ul>
+          <!-- Votre contenu pour hier -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Div ACCOUNT -->
+    <div id="accountPanel"
+         [class]="accountPanelVisible ? 'h-auto' : 'h-0'"
+         class="account-panel w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
+
+      <div class="account-details text-xxs p-4 h-[300px] overflow-y-auto flex" [class.hidden]="!accountPanelVisible">
+        <div class="w-1/2">
+          <h3 class="text-lg font-semibold mb-2">Informations du compte</h3>
+          <div class="flex justify-center items-center ">
+            <img src="{{ userAccount.picture }}" class="rounded-full mb-5" alt="Image du compte">
+          </div>
+          <div class="user-info text-center">
+            <p class="font-bold">Nom d'utilisateur:</p>
+            <p>{{ userAccount.name }}</p>
+            <hr/>
+            <p class="font-bold mt-5">E-Mail:</p>
+            <p>{{ userAccount.email }}</p>
+          </div>
+        </div>
+        <div class="w-1/2">
+          <h3 class="account-action-title text-lg font-semibold mb-2">Actions</h3>
+          <div class="account-action">
+            <a href="#" class="change-password block mt-4 p-2 text-2xl">Activer le mode sombre</a>
+            <hr/>
+            <a href="#" class="view-log block mt-4 p-2 text-2xl">Consulter le journal de compte</a>
+            <hr/>
+            <a (click)="signOut()" class="sign-out block mt-4 p-2 text-2xl">Se déconnecter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Div AUJOURD'HUI -->
+    <div id="aujourdhuiPanel" [class.h-0]="!aujourdhuiPanelVisible" [class.h-auto]="aujourdhuiPanelVisible" class="w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
+      <!-- Contenu de l'historique -->
+      <img [class.hidden]="!aujourdhuiPanelVisible" (click)="toggleAujourdhuiPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!aujourdhuiPanelVisible">
+        <h3 class="text-lg font-semibold mb-2">Prévision météorologique</h3>
+        <p class="mb-5">Aujourd'hui</p>
+        <ul>
+          <!-- 10:00 -->
+          <li class="m-5 ">
+
+            <div class="inline-block justify-center items-center">
+              <strong><p>PARIS</p></strong>
+              <strong><p>10:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Début de légères pluies</p>
+            </div>
+
+          </li>
+          <!-- 11:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>11:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super	">
+              <p>12°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Soleil</p>
+            </div>
+          </li>
+          <!-- 12:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>12:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super	">
+              <p>11°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Nuageux</p>
+            </div>
+          </li>
+          <!-- 13:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>13:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super	">
+              <p>7°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Pluies légères</p>
+            </div>
+          </li>
+          <!-- 14:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>14:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super	">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Soleil</p>
+            </div>
+          </li>
+          <!-- 15:00 -->
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>15:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super	">
+              <p>13°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super	">
+              <p>Nuageux</p>
+            </div>
+          </li>
+          <!-- Ajoutez d'autres éléments d'historique ici -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Div NOTIFICATION -->
+    <div id="notificationPanel" [class.h-0]="!notificationPanelVisible" [class.h-auto]="notificationPanelVisible" class="w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
+      <!-- Contenu de l'historique -->
+      <img [class.hidden]="!notificationPanelVisible" (click)="toggleNotificationPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!notificationPanelVisible">
+        <h3 class="text-lg font-semibold mb-2">Notifications</h3>
+
+        <p class="mb-5">Aujourd'hui</p>
+        <ul>
+          <li class="m-5">
+            <div class="inline-block">
+              <strong><p>PARIS</p></strong>
+              <strong><p>10:00</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/cloudy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
+              <p>Début de légères pluies</p>
+            </div>
+          </li>
+          <li class="m-5 ">
+            <div class="inline-block">
+              <strong><p>LONDRES</p></strong>
+              <strong><p>14:30</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/sun.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
+              <p>Soleil</p>
+            </div>
+          </li>
+
+          <li class="m-5 ">
+            <div class="inline-block">
+              <strong><p>NEW YORK</p></strong>
+              <strong><p>08:45</p></strong>
+            </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
+            <div class="inline-block">
+              <img src="/assets/img/rainy.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
+            </div>
+            <div class="inline-block align-super">
               <p>Pluies intermittentes</p>
             </div>
           </li>
 
-          <li class="m-5 text-xxs">
+          <li class="m-5 ">
             <div class="inline-block">
               <strong><p>TOKYO</p></strong>
               <strong><p>18:15</p></strong>
             </div>
+            <div class="inline-block text-2xl ml-5 align-super">
+              <p>10°</p>
+            </div>
             <div class="inline-block">
               <img src="/assets/img/thunderstorm.png" class="w-5 sm:w-8 mx-4" alt="icon de météo">
             </div>
-            <div class="inline-block">
+            <div class="inline-block align-super">
               <p>Orages</p>
             </div>
           </li>
@@ -168,8 +382,9 @@
 
     <!-- Map -->
     <div class="flex-grow -z-0" id="map"></div>
+
     <!-- Div météo DESKTOP -->
-    <div class="hidden display-temperature:block absolute top-0 right-0 z-10 mt-2 mr-2  text-xxs">
+    <div (click)="toggleAujourdhuiPanel()" class="hidden display-temperature:block absolute top-0 right-0 z-10 mt-2 mr-2  text-xxs">
       <div class="flex flex-row items-center justify-center p-2 sm:p-4 bg-white shadow-lg rounded-xl">
         <img src="/assets/img/sun.png" alt="" class="w-6">
         <span class=" ml-3">
@@ -181,7 +396,7 @@
     </div>
 
     <!-- Div météo MOBILE-->
-    <div class=" display-temperature:hidden absolute bottom-20 ml-5 right-0 z-10 mt-2 mr-2  text-xxs">
+    <div (click)="toggleAujourdhuiPanel()" class=" display-temperature:hidden absolute bottom-20 ml-5 right-0 z-10 mt-2 mr-2  text-xxs">
       <div class="flex flex-row items-center justify-center p-2 sm:p-4 bg-white shadow-lg rounded-xl">
         <img src="/assets/img/sun.png" alt="" class="w-6">
         <span class="ml-3">
@@ -197,22 +412,22 @@
       <!-- Conteneur de grille pour les boutons, affichés horizontalement sur les petits écrans -->
       <div class="grid grid-cols-4 gap-3 sm:gap-20 mt-2 mb-1 justify-center ">
 
-        <a (click)="toggleHistoryPanel()"  class="flex flex-col items-center justify-center">
-          <img src="/assets/img/placeholder.png" alt="" class="w-4 ">
-          <span>Déplacements</span>
+        <a (click)="toggleAujourdhuiPanel()"  class="flex flex-col items-center justify-center">
+          <img src="/assets/img/calendar.png" alt="" class="w-4 ">
+          <span>Aujourd'hui</span>
         </a>
 
-        <a href="/" class="flex flex-col items-center justify-center ">
-          <img src="/assets/img/tab.png" alt="" class="w-4">
-          <span>Enregistrer</span>
+        <a (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center ">
+          <img src="/assets/img/history.png" alt="" class="w-4">
+          <span>Historique</span>
         </a>
 
-        <a href="/" class="flex flex-col items-center justify-center ">
+        <a (click)="toggleNotificationPanel()" class="flex flex-col items-center justify-center ">
           <img src="/assets/img/notification.png" alt="" class="w-4">
           <span >Notifications</span>
         </a>
 
-        <a (click)="signOut()" href="/" class="flex flex-col items-center justify-center ">
+        <a (click)="toggleAccountPanel()" class="flex flex-col items-center justify-center ">
           <img src="/assets/img/user.png" alt="" class="w-4">
           <span class="" >Compte</span>
         </a>
