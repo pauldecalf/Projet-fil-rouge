@@ -8,6 +8,18 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "serve": {
+    "builder": "@angular-devkit/build-angular:dev-server",
+    "options": {
+      "browserTarget": "my-project:build",
+      "proxyConfig": "proxy.conf.json"
+    },
+    "configurations": {
+      "production": {
+        "browserTarget": "my-project:build:production"
+      }
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.1.0",

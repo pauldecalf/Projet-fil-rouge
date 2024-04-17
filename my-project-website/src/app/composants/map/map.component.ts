@@ -39,7 +39,6 @@ export class MapComponent {
           const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
           this.createMap(coords);
           this.addMarker({ coords, text: "Vous êtes ici ", open: true });
-          console.log('Latitude: ' + position.coords.latitude + ' Longitude: ' + position.coords.longitude);
           if (sessionStorage.getItem("loggedInUser")) {
             this.sendLocationRequest(coords);
           }
@@ -107,55 +106,70 @@ export class MapComponent {
       try {
         const parsedUser = JSON.parse(loggedInUser || '');
         userEmail = parsedUser.name;
+        sessionStorage.setItem('userEmail', userEmail);
       } catch (error) {
         console.error('Error parsing loggedInUser:', error);
       }
     }
 
-    const currentTime = new Date().getTime();
-    const lastRequestTime = Number(sessionStorage.getItem('lastRequestTime-'+userEmail));
-    if (userEmail !== 'visiteur' && lastRequestTime && (currentTime - lastRequestTime) < 300000) {
+    const currentTime = Date.now();  // save the current timestamp as Last Request Time in the sessionStorage
+    const lastRequestTime = Number(sessionStorage.getItem('lastRequestTime'));
+    if (userEmail !== 'visiteur'  && (currentTime - lastRequestTime) < 300000) {
       // Si moins de 5 minutes se sont écoulées depuis la dernière requête, on ne fait rien
       return;
     }
 
-    const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&units=metric`;
+
+    const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&lang=fr&units=metric`;
 
     this.http.get(weatherAPIUrl).pipe(
       catchError(error => throwError(() => new Error('Error fetching weather data: ' + error)))
     ).subscribe(
       (weatherResponse: any) => {
-        console.log('Weather data fetched successfully:', weatherResponse);
-        const weatherData = {
-          temperature: weatherResponse.main.temp,
-          pressure: weatherResponse.main.pressure,
-          humidity: weatherResponse.main.humidity,
-          windSpeed: weatherResponse.wind.speed,
-        };
+        console.log('Récupération des données de OpenWeather:', weatherResponse);
 
         sessionStorage.setItem('temp', String(weatherResponse.main.temp));
-        sessionStorage.setItem('lastRequestTime-' + userEmail, String(currentTime));  // save the current time as Last Request Time in the sesssionStorage
+        sessionStorage.setItem('lastRequestTime', String(Date.now()));  // save the current timestamp as Last Request Time in the sessionStorage
 
         if (userEmail !== 'visiteur') {
           const dataToSend = {
-            userEmail,
+            userEmail: userEmail,
             lng: coords.lng,
             lat: coords.lat,
-            heureAppel: currentTime,
-            temperature: weatherData.temperature,
-            pressure: weatherData.pressure,
-            humidity: weatherData.humidity,
-            windSpeed: weatherData.windSpeed,
+            name: weatherResponse.name,
+            temperature: weatherResponse.main.temp,
+            pressure: weatherResponse.main.pressure,
+            humidity: weatherResponse.main.humidity,
+            windSpeed: weatherResponse.wind.speed,
+            minTemperature: weatherResponse.main.temp_min,
+            maxTemperature: weatherResponse.main.temp_max,
+            pression: weatherResponse.main.pressure,
+            vitesseVent: weatherResponse.wind.speed,
+            weatherDescription: weatherResponse.weather[0].description,
+            weatherIcon: weatherResponse.weather[0].icon,
+            sunrise: new Date(weatherResponse.sys.sunrise * 1000).toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' }),
+            sunset: new Date(weatherResponse.sys.sunset * 1000).toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' }),
+            feelsLike: weatherResponse.main.feels_like,
+            visibility: weatherResponse.visibility,
+            uvIndex: weatherResponse.uvi,
+            dewPoint: weatherResponse.main.dew_point,
+            clouds: weatherResponse.clouds.all,
+            rain: weatherResponse.rain ? weatherResponse.rain['1h'] : 0,
+            snow: weatherResponse.snow ? weatherResponse.snow['1h'] : 0
           };
 
-          this.http.post('https://c8c4-185-226-32-21.ngrok-free.app/openweather', dataToSend).subscribe(
+          console.log(dataToSend)
+
+          this.http.post('http://localhost:30000/openweather', dataToSend).subscribe(
             (response) => {
-              console.log('Location and weather data sent successfully:', response);
+              console.log("Envoi en base de donnée :", response);
             },
             (error) => {
               console.error('Error sending location and weather data:', error);
             }
           );
+
+
         }
       },
       (error) => {

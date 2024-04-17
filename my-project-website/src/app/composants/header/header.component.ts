@@ -1,21 +1,28 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {LoginComponent} from "../login/login.component";
-import {NgIf} from "@angular/common";
+import {DatePipe, formatDate, KeyValuePipe, NgForOf, NgIf} from "@angular/common";
 import {AuthService} from "../../auth.service";
 import {LocationService} from "../../location.service";
 import { Router } from '@angular/router';
+import {WeatherService} from "../../weather.service";
+import { HttpClient } from '@angular/common/http';
+import {FormsModule} from "@angular/forms";
+
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     LoginComponent,
-    NgIf
+    NgIf,
+    DatePipe,
+    NgForOf,
+    KeyValuePipe,
+    FormsModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  // Définir l'objet utilisateur avec des propriétés initiales
   userAccount = {
     email: '',
     name: '',
@@ -23,68 +30,116 @@ export class HeaderComponent implements OnInit {
     family_name: '',
     picture: ''
   };
-
+  dailyForecast: any[] = [];
+  weatherData: any;
+  weatherIconUrl: any;
   showLogin: boolean = false;
-  auth = inject(AuthService);
   temperature: string | undefined;
+  data: any;
+  historyPanelVisible: boolean = false;
+  accountPanelVisible: boolean = false;
+  notificationPanelVisible: boolean = false;
+  aujourdhuiPanelVisible: boolean = false;
+  weatherDataUser: any[] = [];
+  weatherDataByDay: { [key: string]: any[] } = {}; // Déclaration de la propriété weatherDataByDay
+
   constructor(private authService: AuthService,
               private router: Router,
               private locationService: LocationService,
               private cdr: ChangeDetectorRef,
-              private mapService: LocationService) {}
+              private weatherService: WeatherService,
+              private http: HttpClient) {}
 
   @ViewChild('burgerBar') burgerBar: ElementRef | undefined;
+
   ngOnInit() {
+    this.getWeatherData();
+    this.checkSessionStorage();
+    this.getHistoricalUser();
+  }
 
-    this.RecuperationDesDonnees();
+   async getHistoricalUser() {
+     this.weatherDataUser = await this.http.get<any>('http://localhost:30000/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
+      console.log(this.weatherDataUser)
+  }
 
 
+
+
+  getWeatherIcon(description: string): string {
+    return `/assets/img/${description.toLowerCase()}.png`;
+  }
+
+  getDailyWeatherForecast() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      const lon = coords.longitude;
+      const lat = coords.latitude;
+
+      this.weatherService.getDailyForecast(lat, lon).subscribe(
+        (data) => {
+          this.dailyForecast = data.daily;  // Mettez à jour dailyForecast ici
+          console.log("Daily Forecast Data:", this.dailyForecast);  // Utilisez dailyForecast ici
+        },
+        (error) => {
+          console.error('Error fetching daily weather forecast:', error);
+        }
+      );
+    });
+  }
+
+  getWeatherData() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      const lon = coords.longitude;
+      const lat = coords.latitude;
+
+      this.weatherService.getWeather(lat, lon).subscribe(
+        (data) => {
+          this.weatherData = data;
+          this.weatherIconUrl = 'https://openweathermap.org/img/w/' + this.weatherData.weather[0].icon + '.png';
+        },
+        (error) => {
+          console.error('Error fetching weather data:', error);
+        }
+      );
+    });
+  }
+
+  checkSessionStorage() {
     const temp = sessionStorage.getItem('temp');
     if (temp !== null) {
       this.temperature = JSON.parse(temp);
     }
 
     this.showLogin = !sessionStorage.getItem('loggedInUser');
-    this.cdr.detectChanges(); // Déclenche manuellement la détection de changement
+    this.cdr.detectChanges();
+
     this.burgerBar?.nativeElement.addEventListener('click', (e: { preventDefault: () => void; }) => {
       e.preventDefault();
-      // Sélectionnez les éléments à afficher/cacher par leur classe ou id
       document.querySelectorAll('.text-header-2, .text-header').forEach((element) => {
-        element.classList.toggle('hidden'); // Basculer la classe 'hidden'
+        element.classList.toggle('hidden');
       });
     });
 
-
+    const storedUser = sessionStorage.getItem('loggedInUser');
+    if (storedUser) {
+      let userObj = JSON.parse(storedUser);
+      this.userAccount.email = userObj.email;
+      this.userAccount.name = userObj.name;
+      this.userAccount.picture = userObj.picture;
+    }
   }
-RecuperationDesDonnees() {
-  // Récupérer les informations utilisateur du sessionStorage
-  const storedUser = sessionStorage.getItem('loggedInUser');
 
-  // S'assurer que les informations ont été correctement récupérées
-  if (storedUser) {
-    // Les informations sont stockées sous forme de chaîne, nous devons les convertir en objet
-    let userObj = JSON.parse(storedUser);
-
-    // Remplir les informations de l'utilisateur
-    this.userAccount.email = userObj.email;
-    this.userAccount.name = userObj.name;
-    this.userAccount.picture = userObj.picture;
-  }
-}
-
-
-// Méthode pour gérer le clic sur le bouton Historique
-  historyPanelVisible: boolean = false;
   toggleHistoryPanel() {
     this.historyPanelVisible = !this.historyPanelVisible;
     if (this.historyPanelVisible) {
       this.aujourdhuiPanelVisible = false;
       this.notificationPanelVisible = false;
+      this.accountPanelVisible = false;
     }
   }
 
-// Méthode pour gérer le clic sur le bouton Aujourd'hui
-  aujourdhuiPanelVisible: boolean = false;
   toggleAujourdhuiPanel() {
     this.aujourdhuiPanelVisible = !this.aujourdhuiPanelVisible;
     if (this.aujourdhuiPanelVisible) {
@@ -94,8 +149,6 @@ RecuperationDesDonnees() {
     }
   }
 
-// Méthode pour gérer le clic sur le bouton de Notification
-  notificationPanelVisible: boolean = false;
   toggleNotificationPanel() {
     this.notificationPanelVisible = !this.notificationPanelVisible;
     if (this.notificationPanelVisible) {
@@ -105,8 +158,6 @@ RecuperationDesDonnees() {
     }
   }
 
-  // Méthode pour gérer le clic sur le bouton "Account"
-  accountPanelVisible: boolean = false;
   toggleAccountPanel() {
     this.accountPanelVisible = !this.accountPanelVisible;
     if (this.accountPanelVisible) {
@@ -121,10 +172,19 @@ RecuperationDesDonnees() {
   }
 
   signOut() {
-    this.authService.signOut();  // Utilisation de `this.authService` et non de `this.auth`
-    this.router.navigate(['/']); // rediriger vers la page de connexion ou l'accueil
-    location.reload(); // recharger la page
+    this.authService.signOut();
+    this.router.navigate(['/']);
+    location.reload();
   }
 
-}
+  getWeatherIconUrl(icon: string): string {
+    return `https://openweathermap.org/img/w/${icon}.png`;
+  }
 
+  getWeatherDescription(weather: any): string {
+    return weather?.weather[0]?.description || '';
+  }
+
+  protected readonly Date = Date;
+  protected readonly formatDate = formatDate;
+}
