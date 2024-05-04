@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
   accountPanelVisible: boolean = false;
   notificationPanelVisible: boolean = false;
   aujourdhuiPanelVisible: boolean = false;
+  searchPanelVisible: boolean = false;
   weatherDataUser: any[] = [];
   weatherDataByDay: { [key: string]: any[] } = {}; // Déclaration de la propriété weatherDataByDay
 
@@ -56,6 +57,8 @@ export class HeaderComponent implements OnInit {
     this.getWeatherData();
     this.checkSessionStorage();
     this.getHistoricalUser();
+
+
   }
 
    async getHistoricalUser() {
@@ -137,6 +140,7 @@ export class HeaderComponent implements OnInit {
       this.aujourdhuiPanelVisible = false;
       this.notificationPanelVisible = false;
       this.accountPanelVisible = false;
+      this.searchPanelVisible = false;
     }
   }
 
@@ -146,6 +150,7 @@ export class HeaderComponent implements OnInit {
       this.historyPanelVisible = false;
       this.notificationPanelVisible = false;
       this.accountPanelVisible = false;
+      this.searchPanelVisible = false;
     }
   }
 
@@ -155,6 +160,7 @@ export class HeaderComponent implements OnInit {
       this.historyPanelVisible = false;
       this.aujourdhuiPanelVisible = false;
       this.accountPanelVisible = false;
+      this.searchPanelVisible = false;
     }
   }
 
@@ -164,8 +170,20 @@ export class HeaderComponent implements OnInit {
       this.historyPanelVisible = false;
       this.notificationPanelVisible = false;
       this.aujourdhuiPanelVisible = false;
+      this.searchPanelVisible = false;
     }
   }
+  toggleSearchPanel() {
+    this.searchPanelVisible = !this.searchPanelVisible;
+    if (this.searchPanelVisible) {
+      this.historyPanelVisible = false;
+      this.notificationPanelVisible = false;
+      this.aujourdhuiPanelVisible = false;
+    }
+  }
+
+
+
 
   SaveLocation() {
     this.locationService.sendLocationRequest({ lat: 123, lng: 456 });
@@ -187,4 +205,8 @@ export class HeaderComponent implements OnInit {
 
   protected readonly Date = Date;
   protected readonly formatDate = formatDate;
+
+
+
+
 }
