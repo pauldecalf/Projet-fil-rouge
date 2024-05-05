@@ -6,37 +6,37 @@
     <!-- Header de gauche pour pc -->
     <div class="lg:flex hidden flex-col items-center justify-between w-16 bg-white shadow-lg rounded-xl min-h-screen">
       <div>
-        <a #burgerBar href="/" class="flex flex-col items-center justify-center p-4">
+        <a #burgerBar href="/" class="hover:cursor-pointer flex flex-col items-center justify-center p-4">
           <img src="/assets/img/burger-bar%20(1).png" alt="icon burger" class="w-5">
           <span class="text-header mt-1 hidden">Menu</span>
         </a>
-        <a (click)="toggleAujourdhuiPanel()" class="flex flex-col items-center justify-center p-4">
+        <a (click)="toggleAujourdhuiPanel()" class=" hover:cursor-pointer flex flex-col items-center justify-center p-4">
           <img src="/assets/img/calendar.png" alt="icon calendar" class="w-5">
           <span class="text-header-2 mt-1 hidden">Aujourd'hui</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="hover:cursor-pointer flex flex-col items-center justify-center p-4">
           <img src="/assets/img/history.png" alt="icon history" class="w-5">
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
 
-        <a (click)="toggleNotificationPanel()" class=" flex flex-col items-center justify-center p-4">
+        <a (click)="toggleNotificationPanel()" class="hover:cursor-pointer flex flex-col items-center justify-center p-4">
         <img src="/assets/img/notification.png" alt="icon notification" class="w-5">
           <span class="text-header-2 mt-1 hidden">Notifications</span>
         </a>
       </div>
       <div>
-        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="flex flex-col items-center justify-between p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="hover:cursor-pointer flex flex-col items-center justify-between p-4">
           <img src="/assets/img/user.png" alt="icon user" class="w-5">
           <span class="text-header mt-1 hidden">Compte</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="signOut()" class="flex flex-col items-center justify-between p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="signOut()" class="hover:cursor-pointer flex flex-col items-center justify-between p-4">
           <img src="/assets/img/exit.png" alt="icon logout" class="w-5">
           <span class="text-header mt-1 hidden">Déconnexion</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="flex flex-col items-center justify-between p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="hover:cursor-pointer flex flex-col items-center justify-between p-4">
           <img src="/assets/img/user.png" alt="icon login" class="w-5">
           <span class="text-header mt-1 hidden">Connexion</span>
         </a>
@@ -62,7 +62,7 @@
     <!-- Section RECHERCHE -->
     <div id="searchPanel" [class.h-0]="!searchPanelVisible" [class.h-auto]="searchPanelVisible" class="w-[70%] md:w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
-      <img [class.hidden]="!searchPanelVisible" (click)="toggleSearchPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="icon close">
+      <img [class.hidden]="!searchPanelVisible" (click)="toggleSearchPanel()" class="hover:cursor-pointer absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="icon close">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!searchPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Météo</h3>
         <p class="mb-5">Obtenez les informations météorologiques actuelles et les prévisions pour la journée pour le lieu que vous avez saisi.</p>
@@ -79,7 +79,7 @@
     <!-- Div HISTORIQUE -->
     <div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="w-[70%] md:w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
-      <img [class.hidden]="!historyPanelVisible" (click)="toggleHistoryPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <img [class.hidden]="!historyPanelVisible" (click)="toggleHistoryPanel()" class="hover:cursor-pointer absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!historyPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Historique météorologiques</h3>
         <p class="mb-5">Voici les information météorologique enregistré</p>
@@ -144,7 +144,7 @@
     <!-- Div AUJOURD'HUI -->
     <div id="aujourdhuiPanel" [class.h-0]="!aujourdhuiPanelVisible" [class.h-auto]="aujourdhuiPanelVisible" class="w-[70%] md:w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
-      <img [class.hidden]="!aujourdhuiPanelVisible" (click)="toggleAujourdhuiPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <img [class.hidden]="!aujourdhuiPanelVisible" (click)="toggleAujourdhuiPanel()" class="hover:cursor-pointer absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!aujourdhuiPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Informations météorologiques</h3>
         <p class="mb-5">Aujourd'hui</p>
@@ -198,7 +198,7 @@
     <!-- Div NOTIFICATION -->
     <div id="notificationPanel" [class.h-0]="!notificationPanelVisible" [class.h-auto]="notificationPanelVisible" class="w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
-      <img [class.hidden]="!notificationPanelVisible" (click)="toggleNotificationPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <img [class.hidden]="!notificationPanelVisible" (click)="toggleNotificationPanel()" class="hover:cursor-pointer absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!notificationPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Notifications</h3>
         <p class="mb-5">Cette fonctionnalité permet de notifier l'utilisateur d'un changement climatique (pluie, averse...)</p>
@@ -245,27 +245,27 @@
       <!-- Conteneur de grille pour les boutons, affichés horizontalement sur les petits écrans -->
       <div class="grid grid-cols-4 gap-3 sm:gap-20 mt-2 mb-1 justify-center ">
 
-        <a (click)="toggleAujourdhuiPanel()"  class="flex flex-col items-center justify-center">
+        <a (click)="toggleAujourdhuiPanel()"  class="hover:cursor-pointer flex flex-col items-center justify-center">
           <img src="/assets/img/calendar.png" alt="" class="w-4 ">
           <span>Aujourd'hui</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center ">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="hover:cursor-pointer flex flex-col items-center justify-center ">
           <img src="/assets/img/history.png" alt="" class="w-4">
           <span>Historique</span>
         </a>
 
-        <a (click)="toggleNotificationPanel()" class="flex flex-col items-center justify-center ">
+        <a (click)="toggleNotificationPanel()" class="hover:cursor-pointer flex flex-col items-center justify-center ">
           <img src="/assets/img/notification.png" alt="" class="w-4">
           <span >Notifications</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="flex flex-col items-center justify-center ">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="hover:cursor-pointer flex flex-col items-center justify-center ">
           <img src="/assets/img/user.png" alt="" class="w-4">
           <span class="" >Compte</span>
         </a>
 
-        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="flex flex-col items-center justify-center ">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class=" hover:cursor-pointer flex flex-col items-center justify-center ">
           <img src="/assets/img/user.png" alt="" class="w-4">
           <span>Connexion</span>
         </a>
