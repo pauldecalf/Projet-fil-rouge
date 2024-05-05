@@ -7,37 +7,37 @@
     <div class="lg:flex hidden flex-col items-center justify-between w-16 bg-white shadow-lg rounded-xl min-h-screen">
       <div>
         <a #burgerBar href="/" class="flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/burger-bar%20(1).png" alt="" class="w-5">
+          <img src="/assets/img/burger-bar%20(1).png" alt="icon burger" class="w-5">
           <span class="text-header mt-1 hidden">Menu</span>
         </a>
         <a (click)="toggleAujourdhuiPanel()" class="flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/calendar.png" alt="" class="w-5">
+          <img src="/assets/img/calendar.png" alt="icon calendar" class="w-5">
           <span class="text-header-2 mt-1 hidden">Aujourd'hui</span>
         </a>
 
         <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
-          <img src="/assets/img/history.png" alt="" class="w-5">
+          <img src="/assets/img/history.png" alt="icon history" class="w-5">
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
 
         <a (click)="toggleNotificationPanel()" class=" flex flex-col items-center justify-center p-4">
-        <img src="/assets/img/notification.png" alt="" class="w-5">
+        <img src="/assets/img/notification.png" alt="icon notification" class="w-5">
           <span class="text-header-2 mt-1 hidden">Notifications</span>
         </a>
       </div>
       <div>
         <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="flex flex-col items-center justify-between p-4">
-          <img src="/assets/img/user.png" alt="" class="w-5">
+          <img src="/assets/img/user.png" alt="icon user" class="w-5">
           <span class="text-header mt-1 hidden">Compte</span>
         </a>
 
         <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="signOut()" class="flex flex-col items-center justify-between p-4">
-          <img src="/assets/img/exit.png" alt="" class="w-5">
+          <img src="/assets/img/exit.png" alt="icon logout" class="w-5">
           <span class="text-header mt-1 hidden">Déconnexion</span>
         </a>
 
         <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="flex flex-col items-center justify-between p-4">
-          <img src="/assets/img/user.png" alt="" class="w-5">
+          <img src="/assets/img/user.png" alt="icon login" class="w-5">
           <span class="text-header mt-1 hidden">Connexion</span>
         </a>
       </div>
@@ -62,7 +62,7 @@
     <!-- Section RECHERCHE -->
     <div id="searchPanel" [class.h-0]="!searchPanelVisible" [class.h-auto]="searchPanelVisible" class="w-[70%] md:w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
       <!-- Contenu de l'historique -->
-      <img [class.hidden]="!searchPanelVisible" (click)="toggleSearchPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="">
+      <img [class.hidden]="!searchPanelVisible" (click)="toggleSearchPanel()" class="absolute top-3 right-7 w-5" src="/assets/img/close.png" alt="icon close">
       <div class="text-xxs p-4 h-[300px] overflow-y-auto" [class.hidden]="!searchPanelVisible">
         <h3 class="text-lg font-semibold mb-2">Météo</h3>
         <p class="mb-5">Obtenez les informations météorologiques actuelles et les prévisions pour la journée pour le lieu que vous avez saisi.</p>
@@ -72,7 +72,6 @@
               <strong><p>Cette fonctionnalité n'est pas encore disponible car elle nécessite un abonnement premium à l'API OpenWeatherMap.</p></strong>
             </div>
           </li>
-          <!-- Ajoutez d'autres éléments d'historique ici -->
         </ul>
       </div>
     </div>
@@ -275,22 +274,4 @@
 
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const historyButton = document.getElementById("historyButton");
-      const historyPanel = document.getElementById("historyPanel");
 
-      historyButton.addEventListener("click", function(event) {
-        event.preventDefault(); // Empêche le rechargement de la page
-        // Basculement du panneau d'historique lors du clic sur le bouton Historique
-        historyPanel.classList.toggle("h-0");
-        historyPanel.classList.toggle("h-auto");
-      });
-
-
-      document.getElementById('search').addEventListener('click', function(event) {
-        console.log('Touche pressée :', event.key);
-      });
-    });
-
-  </script>
