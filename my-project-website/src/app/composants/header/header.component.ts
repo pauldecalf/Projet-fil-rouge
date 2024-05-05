@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit {
     this.checkSessionStorage();
     this.getHistoricalUser();
 
-
   }
 
    async getHistoricalUser() {
@@ -173,17 +172,16 @@ export class HeaderComponent implements OnInit {
       this.searchPanelVisible = false;
     }
   }
+
   toggleSearchPanel() {
     this.searchPanelVisible = !this.searchPanelVisible;
     if (this.searchPanelVisible) {
       this.historyPanelVisible = false;
       this.notificationPanelVisible = false;
       this.aujourdhuiPanelVisible = false;
+      this.accountPanelVisible = false;
     }
   }
-
-
-
 
   SaveLocation() {
     this.locationService.sendLocationRequest({ lat: 123, lng: 456 });
@@ -193,6 +191,10 @@ export class HeaderComponent implements OnInit {
     this.authService.signOut();
     this.router.navigate(['/']);
     location.reload();
+  }
+  changeLogin() {
+    sessionStorage.removeItem('loggedInUser')
+    window.location.reload();
   }
 
   getWeatherIconUrl(icon: string): string {
@@ -207,6 +209,5 @@ export class HeaderComponent implements OnInit {
   protected readonly formatDate = formatDate;
 
 
-
-
+  protected readonly sessionStorage = sessionStorage;
 }

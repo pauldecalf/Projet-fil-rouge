@@ -15,7 +15,7 @@
           <span class="text-header-2 mt-1 hidden">Aujourd'hui</span>
         </a>
 
-        <a (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center p-4">
           <img src="/assets/img/history.png" alt="" class="w-5">
           <span class="text-header-2 mt-1 hidden">Historique</span>
         </a>
@@ -26,14 +26,19 @@
         </a>
       </div>
       <div>
-        <a (click)="toggleAccountPanel()" class="flex flex-col items-center justify-between p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="flex flex-col items-center justify-between p-4">
           <img src="/assets/img/user.png" alt="" class="w-5">
           <span class="text-header mt-1 hidden">Compte</span>
         </a>
 
-        <a (click)="signOut()" class="flex flex-col items-center justify-between p-4">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="signOut()" class="flex flex-col items-center justify-between p-4">
           <img src="/assets/img/exit.png" alt="" class="w-5">
           <span class="text-header mt-1 hidden">Déconnexion</span>
+        </a>
+
+        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="flex flex-col items-center justify-between p-4">
+          <img src="/assets/img/user.png" alt="" class="w-5">
+          <span class="text-header mt-1 hidden">Connexion</span>
         </a>
       </div>
 
@@ -71,8 +76,6 @@
         </ul>
       </div>
     </div>
-
-
 
     <!-- Div HISTORIQUE -->
     <div id="historyPanel" [class.h-0]="!historyPanelVisible" [class.h-auto]="historyPanelVisible" class="w-[70%] md:w-[50%] mt-20 absolute top-0 left-1/2 transform -translate-x-1/2 z-10 bg-white shadow rounded-xl">
@@ -248,7 +251,7 @@
           <span>Aujourd'hui</span>
         </a>
 
-        <a (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center ">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleHistoryPanel()" class="flex flex-col items-center justify-center ">
           <img src="/assets/img/history.png" alt="" class="w-4">
           <span>Historique</span>
         </a>
@@ -258,9 +261,14 @@
           <span >Notifications</span>
         </a>
 
-        <a (click)="toggleAccountPanel()" class="flex flex-col items-center justify-center ">
+        <a *ngIf="sessionStorage.getItem('loggedInUser') != 'visiteur'" (click)="toggleAccountPanel()" class="flex flex-col items-center justify-center ">
           <img src="/assets/img/user.png" alt="" class="w-4">
           <span class="" >Compte</span>
+        </a>
+
+        <a *ngIf="sessionStorage.getItem('loggedInUser') == 'visiteur'" (click)="changeLogin()" class="flex flex-col items-center justify-center ">
+          <img src="/assets/img/user.png" alt="" class="w-4">
+          <span>Connexion</span>
         </a>
       </div>
     </div>
