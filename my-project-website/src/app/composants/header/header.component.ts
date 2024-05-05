@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
 
    async getHistoricalUser() {
      this.weatherDataUser = await this.http.get<any>('http://localhost:30000/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
-      console.log(this.weatherDataUser)
   }
 
 
@@ -81,7 +80,6 @@ export class HeaderComponent implements OnInit {
       this.weatherService.getDailyForecast(lat, lon).subscribe(
         (data) => {
           this.dailyForecast = data.daily;  // Mettez à jour dailyForecast ici
-          console.log("Daily Forecast Data:", this.dailyForecast);  // Utilisez dailyForecast ici
         },
         (error) => {
           console.error('Error fetching daily weather forecast:', error);
@@ -125,7 +123,8 @@ export class HeaderComponent implements OnInit {
     });
 
     const storedUser = sessionStorage.getItem('loggedInUser');
-    if (storedUser) {
+
+    if (storedUser !== null && storedUser !== 'visiteur') {
       let userObj = JSON.parse(storedUser);
       this.userAccount.email = userObj.email;
       this.userAccount.name = userObj.name;

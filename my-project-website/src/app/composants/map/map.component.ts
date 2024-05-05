@@ -126,8 +126,6 @@ export class MapComponent {
       catchError(error => throwError(() => new Error('Error fetching weather data: ' + error)))
     ).subscribe(
       (weatherResponse: any) => {
-        console.log('Récupération des données de OpenWeather:', weatherResponse);
-
         sessionStorage.setItem('temp', String(weatherResponse.main.temp));
         sessionStorage.setItem('lastRequestTime', String(Date.now()));  // save the current timestamp as Last Request Time in the sessionStorage
 
@@ -158,11 +156,8 @@ export class MapComponent {
             snow: weatherResponse.snow ? weatherResponse.snow['1h'] : 0
           };
 
-          console.log(dataToSend)
-
           this.http.post('http://localhost:30000/openweather', dataToSend).subscribe(
             (response) => {
-              console.log("Envoi en base de donnée :", response);
             },
             (error) => {
               console.error('Error sending location and weather data:', error);
