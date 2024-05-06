@@ -156,7 +156,7 @@ export class MapComponent {
             snow: weatherResponse.snow ? weatherResponse.snow['1h'] : 0
           };
 
-          this.http.post('http://localhost:30000/openweather', dataToSend).subscribe(
+          this.http.post('http://88.121.0.5:30000/openweather', dataToSend).subscribe(
             (response) => {
             },
             (error) => {

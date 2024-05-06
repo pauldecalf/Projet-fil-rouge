@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
    async getHistoricalUser() {
-     this.weatherDataUser = await this.http.get<any>('http://localhost:30000/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
+     this.weatherDataUser = await this.http.get<any>('http://88.121.0.5:30000/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
   }
 
 
