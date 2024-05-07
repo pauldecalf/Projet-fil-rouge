@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
    async getHistoricalUser() {
-     this.weatherDataUser = await this.http.get<any>('https://api-de-paul.freeboxos.fr:30000/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
+     this.weatherDataUser = await this.http.get<any>('https://5b10bc54cc99.ngrok.app/openweather/user/' + sessionStorage.getItem('userEmail')).toPromise();
   }
 
 

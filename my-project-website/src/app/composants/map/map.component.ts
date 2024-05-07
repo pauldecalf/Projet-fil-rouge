@@ -2,8 +2,8 @@ import { Component, Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, catchError, throwError } from "rxjs";
-
+import {BehaviorSubject, catchError, Observable, throwError} from "rxjs";
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -35,8 +35,10 @@ export class MapComponent {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Traitement normal si la géolocalisation est autorisée
-          const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
           this.createMap(coords);
           this.addMarker({ coords, text: "Vous êtes ici ", open: true });
           if (sessionStorage.getItem("loggedInUser")) {
@@ -44,14 +46,8 @@ export class MapComponent {
           }
         },
         (error) => {
-          if (error.code === 1) {
-            // L'utilisateur a refusé la géolocalisation, afficher un message d'erreur
-            console.error('L\'utilisateur a refusé la géolocalisation');
-          } else {
-            // Autre erreur de géolocalisation, gérer selon les besoins de votre application
-            console.error('Error getting location', error);
-          }
-          // Fallback to default position
+          console.error("Erreur lors de la récupération de la géolocalisation:", error);
+          // Fallback à une position par défaut en cas d'erreur
           const defaultCoords = { lat: 48.114384, lng: -1.669494 };
           this.createMap(defaultCoords);
           if (sessionStorage.getItem("loggedInUser")) {
@@ -60,8 +56,8 @@ export class MapComponent {
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
-      // Fallback to default position
+      console.error("La géolocalisation n'est pas prise en charge par ce navigateur.");
+      // Fallback à une position par défaut en cas d'absence de support de géolocalisation
       const defaultCoords = { lat: 48.114384, lng: -1.669494 };
       this.createMap(defaultCoords);
       if (sessionStorage.getItem("loggedInUser")) {
@@ -69,6 +65,10 @@ export class MapComponent {
       }
     }
   }
+
+
+
+
 
   createMap(coords: { lat: number; lng: number }): void {
     const zoomLevel = 17;
@@ -156,7 +156,7 @@ export class MapComponent {
             snow: weatherResponse.snow ? weatherResponse.snow['1h'] : 0
           };
 
-          this.http.post('https://api-de-paul.freeboxos.fr:30000/openweather', dataToSend).subscribe(
+          this.http.post('https://5b10bc54cc99.ngrok.app/openweather', dataToSend).subscribe(
             (response) => {
             },
             (error) => {
@@ -172,5 +172,6 @@ export class MapComponent {
       }
     );
   }
+
 
 }
