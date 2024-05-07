@@ -46,7 +46,7 @@ export class MapComponent {
           }
         },
         (error) => {
-          console.error("Erreur lors de la récupération de la géolocalisation:", error);
+          console.error("Erreur lors de la récupération de la localisation:", error);
           // Fallback à une position par défaut en cas d'erreur
           const defaultCoords = { lat: 48.114384, lng: -1.669494 };
           this.createMap(defaultCoords);
@@ -65,8 +65,6 @@ export class MapComponent {
       }
     }
   }
-
-
 
 
 
@@ -100,7 +98,7 @@ export class MapComponent {
 
   private sendLocationRequest(coords: { lat: number; lng: number }): void {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
-    let userEmail = 'visiteur';
+    let userEmail = '';
 
     if (loggedInUser !== 'visiteur') {
       try {
@@ -114,12 +112,10 @@ export class MapComponent {
 
     const currentTime = Date.now();  // save the current timestamp as Last Request Time in the sessionStorage
     const lastRequestTime = Number(sessionStorage.getItem('lastRequestTime'));
-    if (userEmail !== 'visiteur'  && (currentTime - lastRequestTime) < 300000) {
+    if (loggedInUser != 'visiteur'  && (currentTime - lastRequestTime) < 300000) {
       // Si moins de 5 minutes se sont écoulées depuis la dernière requête, on ne fait rien
       return;
     }
-
-
     const weatherAPIUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&appid=621d22b056a93fbeca5fa8b24b8198b8&lang=fr&units=metric`;
 
     this.http.get(weatherAPIUrl).pipe(
@@ -129,7 +125,7 @@ export class MapComponent {
         sessionStorage.setItem('temp', String(weatherResponse.main.temp));
         sessionStorage.setItem('lastRequestTime', String(Date.now()));  // save the current timestamp as Last Request Time in the sessionStorage
 
-        if (userEmail !== 'visiteur') {
+        if (loggedInUser != 'visiteur') {
           const dataToSend = {
             userEmail: userEmail,
             lng: coords.lng,
@@ -171,6 +167,8 @@ export class MapComponent {
         console.error('Error fetching weather data:', error);
       }
     );
+
+
   }
 
 
